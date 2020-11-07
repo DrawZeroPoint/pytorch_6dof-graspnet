@@ -101,9 +101,9 @@ class GraspEstimator:
         return pcs, pc_mean
 
     def generate_grasps(self, pcs):
-        all_grasps = []
-        all_confidence = []
-        all_z = []
+        grasps_list = []
+        confidence_list = []
+        z_list = []
         if self.generate_dense_grasps:
             latent_samples = self.grasp_sampler.net.module.generate_dense_latents(
                 self.num_grasps_per_dim)
@@ -112,16 +112,16 @@ class GraspEstimator:
             for latent_sample, pc in zip(latent_samples, pcs):
                 grasps, confidence, z = self.grasp_sampler.generate_grasps(
                     pc, latent_sample)
-                all_grasps.append(grasps)
-                all_confidence.append(confidence)
-                all_z.append(z)
+                grasps_list.append(grasps)
+                confidence_list.append(confidence)
+                z_list.append(z)
         else:
             for pc in pcs:
                 grasps, confidence, z = self.grasp_sampler.generate_grasps(pc)
-                all_grasps.append(grasps)
-                all_confidence.append(confidence)
-                all_z.append(z)
-        return all_grasps, all_confidence, all_z
+                grasps_list.append(grasps)
+                confidence_list.append(confidence)
+                z_list.append(z)
+        return grasps_list, confidence_list, z_list
 
     def refine_grasps(self, pc, grasps, refine_method, num_refine_steps=10):
 

@@ -6,7 +6,6 @@ import grasp_estimator
 import sys
 import os
 import glob
-import mayavi.mlab as mlab
 from utils.visualization_utils import *
 import mayavi.mlab as mlab
 from utils import utils
