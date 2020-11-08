@@ -135,3 +135,10 @@ as well as my implementation
       Year = {2020}
 }
 ```
+
+# Trouble shooting
+
+Q: UserWarning: Unable to load pointnet2_ops cpp extension. JIT Compiling.
+
+A: Compile `pointnet2_ops` (run `pip install pointnet2_ops_lib/.` in `Pointnet2_PyTorch/`) twice. Since the first
+compiling may not properly handle the C++ extension.
