@@ -17,8 +17,7 @@ class BaseOptions:
         self.parser.add_argument(
             '--dataset_root_folder',
             type=str,
-            default=
-            '/home/jens/Documents/datasets/grasping/unified_grasp_data/',
+            default='/home/dzp/Project_UPEN/unified_grasp_data/',
             help='path to root directory of the dataset.')
         self.parser.add_argument('--num_objects_per_batch',
                                  type=int,
@@ -55,7 +54,7 @@ class BaseOptions:
                                  default=float("inf"),
                                  help='Maximum number of samples per epoch')
         self.parser.add_argument('--num_threads',
-                                 default=3,
+                                 default=4,
                                  type=int,
                                  help='# threads for loading data')
         self.parser.add_argument(
@@ -88,7 +87,8 @@ class BaseOptions:
             type=int,
             default=-1,
             help=
-            'number of points representing the gripper. -1 just uses the points on the finger and also the base. other values use subsampling of the gripper mesh'
+            'number of points representing the gripper. -1 just uses the points on the finger and also the base. '
+            'other values use subsampling of the gripper mesh'
         )
         self.parser.add_argument(
             '--merge_pcs_in_vae_encoder',
@@ -102,7 +102,8 @@ class BaseOptions:
             type=str,
             default='',
             help=
-            'if left blank uses all the categories in the <DATASET_ROOT_PATH>/splits/<category>.json, otherwise only chooses the categories that are set.'
+            'if left blank uses all the categories in the <DATASET_ROOT_PATH>/splits/<category>.json, '
+            'otherwise only chooses the categories that are set.'
         )
         self.parser.add_argument('--blacklisted_categories',
                                  type=str,
@@ -131,7 +132,8 @@ class BaseOptions:
             type=str,
             default='grasps',
             help=
-            'Directory that contains the grasps. Will be joined with the dataset_root_folder and the file names as defined in the splits.'
+            'Directory that contains the grasps. '
+            'Will be joined with the dataset_root_folder and the file names as defined in the splits.'
         )
         self.parser.add_argument(
             '--pointnet_radius',
@@ -231,7 +233,8 @@ class BaseOptions:
             expr_dir = os.path.join(self.opt.checkpoints_dir, self.opt.name)
             if os.path.isdir(expr_dir) and not self.opt.continue_train:
                 option = "Directory " + expr_dir + \
-                    " already exists and you have not chosen to continue to train.\nDo you want to override that training instance with a new one the press (Y/N)."
+                    " already exists and you have not chosen to continue to train.\n" \
+                    "Do you want to override that training instance with a new one the press (Y/N)."
                 print(option)
                 while True:
                     choice = input()
@@ -242,7 +245,8 @@ class BaseOptions:
                         break
                     elif choice.upper() == "N":
                         print(
-                            "Terminating. Remember, if you want to continue to train from a saved instance then run the script with the flag --continue_train"
+                            "Terminating. Remember, if you want to continue to train from a saved instance then run "
+                            "the script with the flag --continue_train"
                         )
                         return None
             else:

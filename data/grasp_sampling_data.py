@@ -12,7 +12,7 @@ class GraspSamplingData(BaseDataset):
         self.device = torch.device('cuda:{}'.format(
             opt.gpu_ids[0])) if opt.gpu_ids else torch.device('cpu')
         self.root = opt.dataset_root_folder
-        self.paths = self.make_dataset()
+        self.paths = self.make_dataset()  # list[str]
         self.size = len(self.paths)
         #self.get_mean_std()
         opt.input_nc = self.ninput_channels
@@ -20,8 +20,7 @@ class GraspSamplingData(BaseDataset):
 
     def __getitem__(self, index):
         path = self.paths[index]
-        pos_grasps, pos_qualities, _, _, _, cad_path, cad_scale = self.read_grasp_file(
-            path)
+        pos_grasps, pos_qualities, _, _, _, cad_path, cad_scale = self.read_grasp_file(path)
         meta = {}
         try:
             all_clusters = self.sample_grasp_indexes(

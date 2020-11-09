@@ -119,6 +119,10 @@ class BaseDataset(data.Dataset):
         self.renderer.change_object(cad_path, cad_scale)
 
     def read_grasp_file(self, path, return_all_grasps=False):
+        """
+        :param path: str Full path to the grasp info json file
+        :param return_all_grasps:
+        """
         file_name = path
         if self.caching and file_name in self.cache:
             pos_grasps, pos_qualities, neg_grasps, neg_qualities, cad, cad_path, cad_scale = copy.deepcopy(
@@ -143,15 +147,41 @@ class BaseDataset(data.Dataset):
                                ratio_of_grasps_to_be_used=1.,
                                return_all_grasps=False):
         """
-        Reads the grasps from the json path and loads the mesh and all the 
+        Reads the grasps from the json path and loads the mesh and all the
         grasps.
+        :param json_path: str Full path to the grasp info json file
+        :param quality:
+        :param ratio_of_grasps_to_be_used: default 1.0
+        :param return_all_grasps:
         """
-        num_clusters = self.opt.num_grasp_clusters
-        root_folder = self.opt.dataset_root_folder
+        num_clusters = self.opt.num_grasp_clusters  # 32
+        root_folder = self.opt.dataset_root_folder  # path to unified_...
 
         if num_clusters <= 0:
             raise NoPositiveGraspsException
 
+        '''
+        json_dict [19] contents: N is the point number in given mesh
+        mesh_normals: list[list], N*3
+        quality_flex: list[float], N, float~[0,1]
+        cad_path: str, unified_grasp_data/meshes/.../...stl
+        gripper, str, panda
+        mesh_points: list[list], N*3
+        quality_flex_object_in_gripper: list[float], N, float~[0 or 1]
+        object: str, meshes/.../...stl
+        h5_file: str, rendered_views/...h5
+        gripper_configuration: list, [0.04]
+        collisions: list, N, 0
+        object_scale: float, 1.0
+        quality_number_of_contacts: list, N, float~[0,1]
+        transforms: list[list[list]], N*4*3
+        fingerprint: str,
+        object_com: list, [0,0,0]
+        roll_angles: list, N
+        object_class: str
+        object_dataset: str, PrimitiveShapes
+        standoffs: list, N, float~[0,1]
+        '''
         json_dict = json.load(open(json_path))
 
         object_model = Object(os.path.join(root_folder, json_dict['object']))
@@ -290,6 +320,10 @@ class BaseDataset(data.Dataset):
             self.ninput_channels = transform_dict['ninput_channels']
 
     def make_dataset(self):
+        """Obtain all grasp info (json files) for X split, where X is train or test
+
+        return: list[str] A list of the full path of the jsons
+        """
         split_files = os.listdir(
             os.path.join(self.opt.dataset_root_folder,
                          self.opt.splits_folder_name))
@@ -316,7 +350,9 @@ class BaseDataset(data.Dataset):
                         open(
                             os.path.join(self.opt.dataset_root_folder,
                                          self.opt.splits_folder_name,
-                                         split_file)))[self.opt.dataset_split]
+                                         split_file)
+                        )
+                    )[self.opt.dataset_split]
                 ]
         return files
 

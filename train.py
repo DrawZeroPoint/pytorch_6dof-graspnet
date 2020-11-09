@@ -9,7 +9,7 @@ import threading
 
 def main():
     opt = TrainOptions().parse()
-    if opt == None:
+    if opt is None:
         return
 
     dataset = DataLoader(opt)

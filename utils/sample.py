@@ -22,8 +22,7 @@ class Object(object):
     def __init__(self, filename):
         """Constructor.
 
-        :param filename: Mesh to load
-        :param scale: Scaling factor
+        :param filename: str Full path to the mesh to load. End with .stl
         """
         self.mesh = trimesh.load(filename)
         self.scale = 1.0
