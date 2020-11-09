@@ -62,6 +62,8 @@ refinement. To use the VAE sampler and/or gradient refinement run:
 python -m demo.main --grasp_sampler_folder checkpoints/vae_pretrained/ --refinement_method gradient
 ```
 
+The demo indicated that using GAN produces more accurate results than VAE. VAE should be better with gradient.
+
 ![example](demo/examples/1.png) ![example](demo/examples/2.png)
 
 ## Dataset

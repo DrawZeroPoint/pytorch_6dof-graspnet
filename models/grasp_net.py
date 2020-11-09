@@ -114,9 +114,6 @@ class GraspNetModel:
         self.backward(out)
         self.optimizer.step()
 
-
-##################
-
     def load_network(self, which_epoch, train=True):
         """load model from disk"""
         save_filename = '%s_net.pth' % which_epoch
@@ -138,7 +135,7 @@ class GraspNetModel:
 
     def save_network(self, net_name, epoch_num):
         """save model to disk"""
-        save_filename = '%s_net.pth' % (net_name)
+        save_filename = '%s_net.pth' % net_name
         save_path = join(self.save_dir, save_filename)
         torch.save(
             {

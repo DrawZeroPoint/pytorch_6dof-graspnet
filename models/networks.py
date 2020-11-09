@@ -230,7 +230,7 @@ class GraspSamplerVAE(GraspSampler):
 
 class GraspSamplerGAN(GraspSampler):
     """
-    Altough the name says this sampler is based on the GAN formulation, it is
+    Although the name says this sampler is based on the GAN formulation, it is
     not actually optimizing based on the commonly known adversarial game.
     Instead, it is based on the Implicit Maximum Likelihood Estimation from
     https://arxiv.org/pdf/1809.09087.pdf which is similar to the GAN formulation
